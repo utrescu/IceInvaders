@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Ice Invaders</title>
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link href="/css/full.css" rel="stylesheet">
+    <style>body{padding-top:50px;}.starter-template{padding:40px 15px;text-align:center;}</style>
+
+    <!--[if IE]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:href="@{/}"><img style="max-width:40px; margin-top: -7px;"
+             src="/images/icein.png"></a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                     <li class="active"><a href="/home.html" th:href="@{/}">Home</a></li>
+                    <li><a href="/products.html" th:href="@{/products}">Products</a></li>
+                    <li><a href="/where.html" th:href="@{/where}">Where</a></li>
+                    <li><a href="/about.html" th:href="@{/about}">About</a></li>              
+                </ul>
+                <!-- Search --> 
+                <div class="col-sm-3 col-md-3 pull-right">
+                    <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <!-- Login -->
+                <ul class="nav navbar-nav navbar-right">
+            <li th:if="${#authorization.expression('!isAuthenticated()')}">
+              <a href="/login.html" th:href="@{/login}">Login</a>
+            </li>
+            <li th:if="${#authorization.expression('isAuthenticated()')}">            
+    			<form action="/logout" th:action="@{/logout}" method="post">
+        		<button class="btn btn-default navbar-btn">Logout</button>
+    			</form>
+			</li>                        
+            <li><a href="/basket.html" th:href="@{/basket}"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>  
+          </ul>
+            </div><!--.nav-collapse -->
+        </div>
+    </nav>
+    
+    <div class="container">
+       <div class="row">
+           <p style="padding:20px;"></p>
+             <h1>On trobar els nostres productes</h1>
+             <p>A part de comprar-los en la nostra web, Ice Invaders té seus i representants en diverses parts del món</p>
+        </div>
+       <div class="row">
+
+   
+           <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/alemanya.png" alt = "Alemanya" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>Alemanya</h3>
+                 <h4>Seu</h4>
+                 <p>Frederich Strasse, 23 - Köln</p>
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Dieter Derder</li> 
+                   <li>Gutter Mahn</li>
+                   <li>Martin Khöler</li>
+                 </ul>                 
+              </div>
+           </div>
+
+           <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/dinamarca.png" alt = "Dinamarca" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>Dinamarca</h3>
+                 <h4>Seu</h4>
+                 <p>Vallensekvej, 16 - Broendby</p>
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Björn Gelatten</li> 
+                 </ul>                 
+              </div>
+           </div>
+
+            <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/belgica.png" alt = "Belgium" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>Belgica</h3>
+                 <h4>Seu</h4>
+                 <p>Frederich Strasse, 23 - Köln</p>
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Frances Bleu</li> 
+                   <li>Jacques Monneux</li>
+                 </ul>                 
+              </div>
+           </div>
+           
+            <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/turquia.png" alt = "Turkey" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>Turquia</h3>
+                 <h4>Seu</h4>
+                 <p>Ahmed, 2334 - Ankara</p>
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Adem Mahlon</li> 
+                   <li>Nalan Fehime</li>
+                 </ul>                 
+              </div>
+           </div>
+
+       </div>
+       <div class="row">
+
+   
+           <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/italia.png" alt = "Generic placeholder thumbnail" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>Itàlia</h3>
+                 <h4>Seu</h4>
+                 <p>Villa Loccatta, 1 - Venezzia</p>
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Massimo Gelattini</li> 
+                   <li>Pietro Martini</li>                   
+                 </ul>                 
+              </div>
+           </div>
+
+           <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/andorra.png" alt = "Generic placeholder thumbnail" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>Andorra</h3>                 
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Benet Pujol</li> 
+                 </ul>                 
+              </div>
+           </div>
+
+            <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/franca.png" alt = "Generic placeholder thumbnail" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>França</h3>
+                 <h4>Seu</h4>
+                 <p>Rue du Champeaux, 11 - Marseille</p>
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Frances Bleu</li> 
+                   <li>Jacques Monneux</li>
+                 </ul>                 
+              </div>
+           </div>
+           
+            <div class = "col-sm-6 col-md-3">
+              <div class = "thumbnail">
+                 <img src = "/images/grecia.png" alt = "Generic placeholder thumbnail" class="img-thumbnail">
+              </div>
+
+              <div class = "caption">
+                 <h3>Grècia</h3>                 
+                 <h4>Representants:</h4>
+                 <ul>
+                   <li>Achilles Anastopoulos</li> 
+                 </ul>                 
+              </div>
+           </div>           
+
+       </div>        
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+</html>
