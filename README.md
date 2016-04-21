@@ -18,8 +18,6 @@ Creating a Mongo collection with articles, build and run the app and go to local
 
 TODO
 
-* Dependencies
-
 * Database configuration
 
 TODO
