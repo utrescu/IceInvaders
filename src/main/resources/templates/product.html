@@ -79,7 +79,7 @@
 					   <p th:text="${producte.descripcio}">Descripció de l'article que pot ser de més d'una línia o pot ser de menys... La veritat és que escric per escriure perquè m'interessa que ocupi una mica d'espai</p>
 					   <div><i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star-o"></i> </div>
 					<hr>
-					<div th:text="${producte.preu}">1234.00</div>					
+					<div th:text="${producte.preu} + ' €'">1234.00</div>					
 					<hr>
 					<div class="btn btn-group">					    
 					    <form role="form" class="form-inline" th:action="@{/basket}" action="/basket" method="post">

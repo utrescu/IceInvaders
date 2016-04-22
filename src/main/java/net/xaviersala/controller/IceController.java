@@ -110,7 +110,7 @@ public class IceController implements ErrorController {
   }
   
   /**
-   * Llistar tots els productes que compleixin una determinada condició (o cap)
+   * Llistar tots els productes que compleixin una determinada condició (o cap).
    * 
    * @param keyword paraula a cercar
    * @param page pàgina a mostrar
@@ -135,13 +135,13 @@ public class IceController implements ErrorController {
     productes = pagina.getContent();
     log.info("........ " + productes);
     
-    model.addAttribute("pagina",page+1);
+    model.addAttribute("pagina",page);
     model.addAttribute("productes", productes);    
     return "products";
   }
   
   /**
-   * Cerca d'un producte a partir del seu nom
+   * Cerca d'un producte a partir del seu nom.
    * 
    * @param nom nom del producte
    * @param model model per la vista
@@ -161,7 +161,7 @@ public class IceController implements ErrorController {
   }
 
   /**
-   * Mostra la cistella de la compra
+   * Mostra la cistella de la compra.
    * 
    * @return pàgina amb la cistella
    */
@@ -173,7 +173,7 @@ public class IceController implements ErrorController {
   }
   
   /**
-   * Mostra la cistella de la compra
+   * Mostra la cistella de la compra.
    * 
    * @return pàgina amb la cistella
    */
@@ -210,7 +210,7 @@ public class IceController implements ErrorController {
 //  }
   
   /**
-   * Passar a pagar
+   * Passar a pagar.
    * 
    * @return pàgina a mostrar
    */

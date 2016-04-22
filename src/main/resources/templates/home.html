@@ -57,7 +57,7 @@
             </li>
             <li th:if="${#authorization.expression('isAuthenticated()')}">            
     			<form action="/logout" th:action="@{/logout}" method="post">
-        		<button class="btn btn-default navbar-btn">Logout</button>
+        		<button class="btn btn-primary navbar-btn">Logout</button>
     			</form>
 			</li>                        
             <li><a href="/basket.html" th:href="@{/basket}"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>  
@@ -81,17 +81,93 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-8">
-                    <h1>Els millors del món</h1>                    
-                    <p class="lead">Ice Invaders garanteix la qualitat dels seus glaçons. Perfectes per qualsevol activitat: restaurants, discotèques, festes de barri o particulars que volen que els seus convidats es quedin amb la boca oberta!</p>
-            </div>                
+            
+            
+            <div class="panel panel-default col-xs-12 col-sm-8">
+  				<div class="panel-heading">Assaboriu el gust del gel del pol Nord!</div>
+  				<div class="panel-body">
+    			Ice Invaders garanteix la qualitat dels seus glaçons. Perfectes per qualsevol activitat: restaurants, discotèques, festes de barri o particulars que volen que els seus convidats es quedin amb la boca oberta!
+    			<h3>Són els millors del món</h3>
+    			Però compte, la gent que els prova no torna a trobar bons els altres glaçons.   
+  			    </div>
+		    </div>
+            
+                        
             <div class="col-xs-12 col-sm-4">
-                    <p style="padding:20px;"></p>
+                    
                     <img src="/images/glassons.jpg" class="img-responsive">
-            </div>            
-        </div>
-    </div>
+            </div>  
+       </div>
+       <div class="row">
+		<div class="well">
+			<div class="media">
+				<div class="col-sm-6 col-sm-offset-1">
+					<span class="media-left"> <img src="/images/bar2.png"
+						alt="bars">
+					</span>
+					<div class="media-body">
+						<h3 class="media-heading">Perfectes pels bars</h3>
 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="well">
+		<div class="media"> 
+          <div class="col-sm-6 col-sm-offset-3">          
+          	<span class="media-left">
+        		<img src="/images/festa2.png" alt="bars">
+    		</span>
+    		<div class="media-body">
+        		<h3 class="media-heading">Ideals per festes privades</h3>
+        
+    		</div>
+    	  </div>
+    	</div>       
+       </div>
+       
+       <div class="well">
+       <div class="media"> 
+          <div class="col-sm-6 col-sm-offset-5">          
+          	<span class="media-left">
+        		<img src="/images/festes.png" alt="bars">
+    		</span>
+    		<div class="media-body">
+        		<h3 class="media-heading">Les discoteques ens els treuen de les mans</h3>
+        
+    		</div>
+    	  </div>
+    	</div>
+       </div>
+       <div class="well">
+       <div class="media"> 
+          <div class="col-sm-6 col-sm-offset-2">          
+          	<span class="media-left">
+        		<img src="/images/bar.png" alt="bars">
+    		</span>
+    		<div class="media-body">
+        		<h3 class="media-heading">No es ven en botigues ni en grans superfícies</h3>
+        
+    		</div>
+    	  </div>
+    	</div>
+    	</div>
+    	<div class="row">
+    	  <div class="col-sm-12">
+    	  </div>
+    	</div>
+    </div>
+</div>
+   <footer class="row-footer">
+        <div class="container">
+            <div class="row"> 
+            <div class="col-xs-12">
+                    <p style="padding:10px;"></p>
+                    <p align=center>© Copyright 2016 Ice Invaders</p>
+                </div> 
+            </div>
+        </div>
+   </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>

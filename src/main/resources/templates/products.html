@@ -93,7 +93,8 @@
             </div>
         </div>
         <div class="panel-footer">
-        	<a href="products.html" th:href="@{'/products?page=' + ${pagina}}">Següent</a>
+            <a th:if="${pagina > 0}" href="products.html" th:href="@{'/products?page=' + ${pagina - 1}}">Anterior</a>
+        	<a th:if="${#lists.size(productes) == 6}" href="products.html" th:href="@{'/products?page=' + ${pagina + 1}}">Següent</a>
         </div>
     </div>
 	</div>
