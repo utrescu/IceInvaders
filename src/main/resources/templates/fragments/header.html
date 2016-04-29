@@ -2,7 +2,7 @@
 <html lang="ca" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="fragments/header :: header">
+<head th:fragment="header">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -10,9 +10,11 @@
 <title>Ice Invaders</title>
 <link rel="shortcut icon" href="">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap-theme.min.css}">
 <link href="/css/full.css" rel="stylesheet">
 <style>
 body {
@@ -33,8 +35,7 @@ body {
 
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-custom"
-		role="navigation"
-		th:replace="fragments/header :: header (menu='basket')">
+		role="navigation" th:fragment="header">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -49,10 +50,14 @@ body {
 
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/home.html" th:href="@{/}">Home</a></li>
-					<li><a href="/products.html" th:href="@{/products}">Products</a></li>
-					<li><a href="/where.html" th:href="@{/where}">Where</a></li>
-					<li><a href="/about.html" th:href="@{/about}">About</a></li>
+					<li th:classappend="${menu=='home'}?active"><a
+						href="/home.html" th:href="@{/}">Home</a></li>
+					<li th:classappend="${menu=='product'}?active"><a
+						href="/products.html" th:href="@{/products}">Products</a></li>
+					<li th:classappend="${menu=='where'}?active"><a
+						href="/where.html" th:href="@{/where}">Where</a></li>
+					<li th:classappend="${menu=='about'}?active"><a
+						href="/about.html" th:href="@{/about}">About</a></li>
 				</ul>
 				<!-- Search -->
 				<div class="col-sm-3 col-md-3 pull-right">
@@ -70,15 +75,16 @@ body {
 				</div>
 				<!-- Login -->
 				<ul class="nav navbar-nav navbar-right">
-					<li th:if="${#authorization.expression('!isAuthenticated()')}">
-						<a href="/login.html" th:href="@{/login}">Login</a>
-					</li>
+					<li th:classappend="${menu=='login'}?active"
+						th:if="${#authorization.expression('!isAuthenticated()')}"><a
+						href="/login.html" th:href="@{/login}">Login</a></li>
 					<li th:if="${#authorization.expression('isAuthenticated()')}">
 						<form action="/logout" th:action="@{/logout}" method="post">
 							<button class="btn btn-default navbar-btn">Logout</button>
 						</form>
 					</li>
-					<li class="active"><a href="/basket.html" th:href="@{/basket}"><span
+					<li th:classappend="${menu=='basket'}?active"><a
+						href="/basket.html" th:href="@{/basket}"><span
 							class="glyphicon glyphicon-shopping-cart"></span></a></li>
 				</ul>
 			</div>
@@ -86,38 +92,24 @@ body {
 		</div>
 	</nav>
 
-	<div class="container">
-		<div class="row">
-			<p style="padding: 20px;"></p>
-			<h1 th:text="'Comanda ' + ${compra.id} + ' realitzada'">Comanda
-				realitzada correctament!</h1>
-			<p class="lead" th:text="${compra.username}">Usuari</p>
-			<table class="table table-striped">
-				<tr>
-					<th>Article</th>
-					<th>Quantitat</th>
-				</tr>
-				<tr th:each="venda  : ${compra.vendes}">
-					<td th:text="${venda.producte.nom}">ARTICLE</td>
-					<td th:text="${venda.quantitat}">1</td>
-				</tr>
-			</table>
-		</div>
-		<div class="row">
-			<div class="btn-toolbar center-block">
-
-				<a id="buidar" th:text="'Seguir comprant'" href="/products"
-					th:href="@{/products}" class="btn btn-default btn-lg"> Seguir
-					comprant </a>
+	<footer class="row-footer" th:fragment="footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<p style="padding: 10px;"></p>
+					<p align=center>© Copyright 2016 Ice Invaders</p>
+				</div>
 			</div>
 		</div>
-	</div>
-
-	<footer th:replace="fragments/header :: footer"></footer>
-
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	</footer>
+	
+	<th:block th:fragment="script">
+	 	<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"
+			th:src="@{/webjars/jquery/1.12.3/js/jquery.min.js}"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+			th:src="@{/webjars/bootstrap/3.3.1/js/bootstrap.min.js}"></script>
+    </th:block>
 </body>
 </html>

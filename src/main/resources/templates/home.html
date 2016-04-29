@@ -1,174 +1,193 @@
 <!DOCTYPE html>
-<html lang="ca" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Ice Invaders</title>
-    <link rel="shortcut icon" href="">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-    <link href="/css/full.css" rel="stylesheet">
-    <style>body{padding-top:50px;}</style>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/header :: header">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Ice Invaders</title>
+<link rel="shortcut icon" href="">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<link href="/css/full.css" rel="stylesheet">
+<style>
+body {
+	padding-top: 50px;
+}
+</style>
 
-    <!--[if IE]>
+<!--[if IE]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#" th:href="@{/}"><img style="max-width:40px; margin-top: -7px;"
-             src="/images/icein.png"></a>
-            </div>
+	<nav class="navbar navbar-inverse navbar-fixed-top navbar-custom"
+		role="navigation"
+		th:replace="fragments/header :: header (menu='home')">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}"><img
+					style="max-width: 40px; margin-top: -7px;" src="/images/icein.png"></a>
+			</div>
 
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                     <li class="active"><a href="/home.html" th:href="@{/}">Home</a></li>
-                    <li><a href="/products.html" th:href="@{/products}">Products</a></li>
-                    <li><a href="/where.html" th:href="@{/where}">Where</a></li>
-                    <li><a href="/about.html" th:href="@{/about}">About</a></li>              
-                </ul>
-                <!-- Search --> 
-                <div class="col-sm-3 col-md-3 pull-right">
-                    <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <!-- Login -->
-                <ul class="nav navbar-nav navbar-right">
-            <li th:if="${#authorization.expression('!isAuthenticated()')}">
-              <a href="/login.html" th:href="@{/login}">Login</a>
-            </li>
-            <li th:if="${#authorization.expression('isAuthenticated()')}">            
-    			<form action="/logout" th:action="@{/logout}" method="post">
-        		<button class="btn btn-primary navbar-btn">Logout</button>
-    			</form>
-			</li>                        
-            <li><a href="/basket.html" th:href="@{/basket}"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>  
-          </ul>
-            </div><!--.nav-collapse -->
-        </div>
-    </nav>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/home.html" th:href="@{/}">Home</a></li>
+					<li><a href="/products.html" th:href="@{/products}">Products</a></li>
+					<li><a href="/where.html" th:href="@{/where}">Where</a></li>
+					<li><a href="/about.html" th:href="@{/about}">About</a></li>
+				</ul>
+				<!-- Search -->
+				<div class="col-sm-3 col-md-3 pull-right">
+					<form class="navbar-form" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search"
+								name="srch-term" id="srch-term">
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- Login -->
+				<ul class="nav navbar-nav navbar-right">
+					<li th:if="${#authorization.expression('!isAuthenticated()')}">
+						<a href="/login.html" th:href="@{/login}">Login</a>
+					</li>
+					<li th:if="${#authorization.expression('isAuthenticated()')}">
+						<form action="/logout" th:action="@{/logout}" method="post">
+							<button class="btn btn-primary navbar-btn">Logout</button>
+						</form>
+					</li>
+					<li><a href="/basket.html" th:href="@{/basket}"><span
+							class="glyphicon glyphicon-shopping-cart"></span></a></li>
+				</ul>
+			</div>
+			<!--.nav-collapse -->
+		</div>
+	</nav>
 
-    <div class="container">
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Ice Invaders</h1>
-                <p>Gel directament importat de les planes gelades de Suècia</p>
-                <ul>
-                    <li>Tallats a mà un a un</li>
-                    <li>Totalment perfectes</li>
-                    <li>En tot el món estan considerats els millors glaçons de tots!</li>
-                </ul>                
-            </div>
-        </div>        
-    </div>
-    <div class="container">
-        <div class="row">
-            
-            
-            <div class="panel panel-default col-xs-12 col-sm-8">
-  				<div class="panel-heading">Assaboriu el gust del gel del pol Nord!</div>
-  				<div class="panel-body">
-    			Ice Invaders garanteix la qualitat dels seus glaçons. Perfectes per qualsevol activitat: restaurants, discotèques, festes de barri o particulars que volen que els seus convidats es quedin amb la boca oberta!
-    			<h3>Són els millors del món</h3>
-    			Però compte, la gent que els prova no torna a trobar bons els altres glaçons.   
-  			    </div>
-		    </div>
-            
-                        
-            <div class="col-xs-12 col-sm-4">
-                    
-                    <img src="/images/glassons.jpg" class="img-responsive">
-            </div>  
-       </div>
-       <div class="row">
-		<div class="well">
-			<div class="media">
-				<div class="col-sm-6 col-sm-offset-1">
-					<span class="media-left"> <img src="/images/bar2.png"
-						alt="bars">
-					</span>
-					<div class="media-body">
-						<h3 class="media-heading">Perfectes pels bars</h3>
+	<div class="container">
+		<div class="jumbotron">
+			<div class="container">
+				<h1>Ice Invaders</h1>
+				<p>Gel directament importat de les planes gelades de Suècia</p>
+				<ul>
+					<li>Tallats a mà un a un</li>
+					<li>Totalment perfectes</li>
+					<li>En tot el món estan considerats els millors glaçons de
+						tots!</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
 
+
+			<div class="panel panel-default col-xs-12 col-sm-8">
+				<div class="panel-heading">Assaboriu el gust del gel del pol
+					Nord!</div>
+				<div class="panel-body">
+					Ice Invaders garanteix la qualitat dels seus glaçons. Perfectes per
+					qualsevol activitat: restaurants, discotèques, festes de barri o
+					particulars que volen que els seus convidats es quedin amb la boca
+					oberta!
+					<h3>Són els millors del món</h3>
+					Però compte, la gent que els prova no torna a trobar bons els
+					altres glaçons.
+				</div>
+			</div>
+
+
+			<div class="col-xs-12 col-sm-4">
+
+				<img src="/images/glassons.jpg" class="img-responsive">
+			</div>
+		</div>
+		<div class="row">
+			<div class="well">
+				<div class="media">
+					<div class="col-sm-6 col-sm-offset-1">
+						<span class="media-left"> <img src="/images/bar2.png"
+							alt="bars">
+						</span>
+						<div class="media-body">
+							<h3 class="media-heading">Perfectes pels bars</h3>
+
+						</div>
 					</div>
 				</div>
 			</div>
+			<div class="well">
+				<div class="media">
+					<div class="col-sm-6 col-sm-offset-3">
+						<span class="media-left"> <img src="/images/festa2.png"
+							alt="bars">
+						</span>
+						<div class="media-body">
+							<h3 class="media-heading">Ideals per festes privades</h3>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="well">
+				<div class="media">
+					<div class="col-sm-6 col-sm-offset-5">
+						<span class="media-left"> <img src="/images/festes.png"
+							alt="bars">
+						</span>
+						<div class="media-body">
+							<h3 class="media-heading">Les discoteques ens els treuen de
+								les mans</h3>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="well">
+				<div class="media">
+					<div class="col-sm-6 col-sm-offset-2">
+						<span class="media-left"> <img src="/images/bar.png"
+							alt="bars">
+						</span>
+						<div class="media-body">
+							<h3 class="media-heading">No es ven en botigues ni en grans
+								superfícies</h3>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12"></div>
+			</div>
 		</div>
-		<div class="well">
-		<div class="media"> 
-          <div class="col-sm-6 col-sm-offset-3">          
-          	<span class="media-left">
-        		<img src="/images/festa2.png" alt="bars">
-    		</span>
-    		<div class="media-body">
-        		<h3 class="media-heading">Ideals per festes privades</h3>
-        
-    		</div>
-    	  </div>
-    	</div>       
-       </div>
-       
-       <div class="well">
-       <div class="media"> 
-          <div class="col-sm-6 col-sm-offset-5">          
-          	<span class="media-left">
-        		<img src="/images/festes.png" alt="bars">
-    		</span>
-    		<div class="media-body">
-        		<h3 class="media-heading">Les discoteques ens els treuen de les mans</h3>
-        
-    		</div>
-    	  </div>
-    	</div>
-       </div>
-       <div class="well">
-       <div class="media"> 
-          <div class="col-sm-6 col-sm-offset-2">          
-          	<span class="media-left">
-        		<img src="/images/bar.png" alt="bars">
-    		</span>
-    		<div class="media-body">
-        		<h3 class="media-heading">No es ven en botigues ni en grans superfícies</h3>
-        
-    		</div>
-    	  </div>
-    	</div>
-    	</div>
-    	<div class="row">
-    	  <div class="col-sm-12">
-    	  </div>
-    	</div>
-    </div>
-</div>
-   <footer class="row-footer">
-        <div class="container">
-            <div class="row"> 
-            <div class="col-xs-12">
-                    <p style="padding:10px;"></p>
-                    <p align=center>© Copyright 2016 Ice Invaders</p>
-                </div> 
-            </div>
-        </div>
-   </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	</div>
+
+	<footer th:replace="fragments/header :: footer"></footer>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"
+		th:src="@{/webjars/jquery/1.12.3/js/jquery.min.js}">
+	</script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/3.3.1/js/bootstrap.min.js}"></script>
 </body>
 </html>

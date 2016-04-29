@@ -215,7 +215,7 @@ public class IceController implements ErrorController {
    * @return pàgina a mostrar
    */
   @RequestMapping("/checkout")
-  public String checkout(@ModelAttribute("cistella") Cistella cistella, SessionStatus status) {
+  public String checkout(@ModelAttribute("cistella") Cistella cistella, SessionStatus status, Model model) {
     
     log.info("... Intenta pagar ....");
     // Comprovo que n'hi ha algun
@@ -224,6 +224,7 @@ public class IceController implements ErrorController {
     } else {
         log.info("...... Paga!");
         // Desar la cistella
+        model.addAttribute("compra", cistella);
         compres.save(cistella);    
         status.setComplete();      
     }
