@@ -79,7 +79,8 @@ body {
 						th:if="${#authorization.expression('!isAuthenticated()')}"><a
 						href="/login.html" th:href="@{/login}">Login</a></li>
 					<li th:if="${#authorization.expression('isAuthenticated()')}">
-						<form action="/logout" th:action="@{/logout}" method="post">
+					    <p class="navbar-text" sec:authentication="name">username</p>
+						<form class="navbar-form pull-right" action="/logout" th:action="@{/logout}" method="post">						    
 							<button class="btn btn-default navbar-btn">Logout</button>
 						</form>
 					</li>

@@ -18,23 +18,26 @@ import net.xaviersala.model.Usuari;
 import net.xaviersala.repositories.UsuariService;
 
 @Component
-public class UserMongoAuthenticator implements AuthenticationProvider {
+public class UserMongoAuthenticatorProvider implements AuthenticationProvider {
   
-  private static final Log log = LogFactory.getLog(UserMongoAuthenticator.class);
+  private static final Log log = LogFactory.getLog(UserMongoAuthenticatorProvider.class);
   
   @Autowired
   UsuariService usuaris;
+  
+  public UserMongoAuthenticatorProvider() {
+    super();
+  }
 
   @Override
-  public Authentication authenticate(Authentication authentication)
+  public Authentication authenticate(final Authentication authentication) 
       throws AuthenticationException {
     String nomUsuari = authentication.getName();
     String textContrasenya = authentication.getCredentials().toString();
     
     // No ha posat la contrasenya
     if (!StringUtils.hasText(textContrasenya)) {
-      log.warn("Username {}: no password provided" + nomUsuari);
-      // throw new BadCredentialsException("no password provided");
+      log.warn("Username {}: no password provided" + nomUsuari);      
       return null;
     }
     // Localitza l'usuari

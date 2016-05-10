@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   
   @Autowired
-  private UserMongoAuthenticator mongoAuthenticationProvider;
+  private UserMongoAuthenticatorProvider mongoAuthenticationProvider;
   
   @Bean
   public PasswordEncoder passwordEncoder() {
