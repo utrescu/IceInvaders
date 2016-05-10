@@ -38,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http
     .authorizeRequests()
         .antMatchers("/", "/home", "/where", "/recomana", "/products", "/product/**", 
-            "/basket", "/about", "/empty", "/webjars/**", "/usuaris").permitAll()
+            "/basket", "/about", "/empty", "/webjars/**").permitAll()
+        .antMatchers("/usuaris").hasAuthority("ROLE_ADMIN")
         .anyRequest().authenticated()
         .and()
     .formLogin()
@@ -64,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth.inMemoryAuthentication().withUser("usuari").password("contrasenya").roles("USER");
+    auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
     auth.authenticationProvider(mongoAuthenticationProvider);
   }
 

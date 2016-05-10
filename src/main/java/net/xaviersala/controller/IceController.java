@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -266,7 +267,7 @@ public class IceController implements ErrorController {
     return "login";
   }
   
-  
+  @Secured("ROLE_ADMIN")  
   @RequestMapping("/usuaris")
   public String creaUsuaris() {
     usuaris.crearUsuari("xavier", "sala");    
