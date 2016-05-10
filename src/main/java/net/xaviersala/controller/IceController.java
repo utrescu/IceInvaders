@@ -29,6 +29,7 @@ import net.xaviersala.model.Producte;
 import net.xaviersala.model.Venda;
 import net.xaviersala.repositories.CistellaRepository;
 import net.xaviersala.repositories.ProducteRepository;
+import net.xaviersala.repositories.UsuariService;
 
 
 /**
@@ -43,6 +44,9 @@ public class IceController implements ErrorController {
   
   ProducteRepository mongo;
   CistellaRepository compres;
+  
+  @Autowired
+  UsuariService usuaris;
   
   /**
    * Creació del control·lador passant-hi com a paràmetre la base de dades.
@@ -260,6 +264,13 @@ public class IceController implements ErrorController {
     }
 
     return "login";
+  }
+  
+  
+  @RequestMapping("/usuaris")
+  public String creaUsuaris() {
+    usuaris.crearUsuari("xavier", "sala");    
+    return "redirect:/";
   }
 
   @RequestMapping("/error")

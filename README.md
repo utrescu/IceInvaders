@@ -9,7 +9,7 @@ I'm developing a fake shop to test diferent Spring components.
 
 ### How do I get set up? ###
 
-* Summary of set up
+#### Summary of set up
 
 1. Install MongoDB
 2. import the json to MongoDB  
@@ -19,7 +19,7 @@ I'm developing a fake shop to test diferent Spring components.
 
 Alternatively, can be run in Docker (see below)
 
-* Configuration
+#### Configuration
 Change the MongoDB IP from src/main/resouces/application.properties to your IP
 
 For example if MongoDB are running in localhost it must be:
@@ -33,17 +33,17 @@ To create a package execute:
     $ ls iceInvaders*
     iceInvaders-0.0.1-SNAPSHOT.jar
 
-* Database configuration
+#### Database configuration
 
 There are a JSON with articles to test. Import the provided file into a MongoDB Database: 
 
     $ mongoimport --db=iceinvaders --collection=articles --file=ice.json
 
-* How to run tests
+#### How to run tests
 
 None yet
 
-* Deployment instructions
+#### Deployment instructions
 
 It's a Spring Boot Maven project so you can run it with:
 
