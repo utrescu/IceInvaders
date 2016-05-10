@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ca" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:fragment="header">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,9 +76,9 @@ body {
 				<!-- Login -->
 				<ul class="nav navbar-nav navbar-right">
 					<li th:classappend="${menu=='login'}?active"
-						th:if="${#authorization.expression('!isAuthenticated()')}"><a
-						href="/login.html" th:href="@{/login}">Login</a></li>
-					<li th:if="${#authorization.expression('isAuthenticated()')}">
+						sec:authorize="!isAuthenticated()">
+						<a href="/login.html" th:href="@{/login}">Login</a></li>
+					<li sec:authorize="isAuthenticated()"}">
 					    <p class="navbar-text" sec:authentication="name">username</p>
 						<form class="navbar-form pull-right" action="/logout" th:action="@{/logout}" method="post">						    
 							<button class="btn btn-default navbar-btn">Logout</button>
@@ -107,10 +107,10 @@ body {
 	<th:block th:fragment="script">
 	 	<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"
-			th:src="@{/webjars/jquery/1.12.3/js/jquery.min.js}"></script>
+			th:src="@{/webjars/jquery/1.12.3/jquery.min.js}"></script>
 		<script
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-			th:src="@{/webjars/bootstrap/3.3.1/js/bootstrap.min.js}"></script>
+			th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
     </th:block>
 </body>
 </html>
