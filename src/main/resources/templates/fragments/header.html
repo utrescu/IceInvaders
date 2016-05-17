@@ -35,7 +35,7 @@ body {
 
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-custom"
-		role="navigation" th:fragment="header">
+		role="navigation" th:fragment="navbar">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -78,8 +78,10 @@ body {
 					<li th:classappend="${menu=='login'}?active"
 						sec:authorize="!isAuthenticated()">
 						<a href="/login.html" th:href="@{/login}">Login</a></li>
-					<li sec:authorize="isAuthenticated()"}">
-					    <p class="navbar-text" sec:authentication="name">username</p>
+					<li sec:authorize="isAuthenticated()">
+					    <p class="navbar-text" >
+					    <a href="/account.html" th:href="@{/usuari}" sec:authentication="name">username</a>
+					    </p>
 						<form class="navbar-form pull-right" action="/logout" th:action="@{/logout}" method="post">						    
 							<button class="btn btn-default navbar-btn">Logout</button>
 						</form>

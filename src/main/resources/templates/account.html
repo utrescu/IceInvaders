@@ -29,7 +29,7 @@ body {
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-custom"
 		role="navigation"
-		th:replace="fragments/header :: header (menu='product')">
+		th:replace="fragments/header :: navbar (menu='login')">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -104,12 +104,12 @@ body {
         
     	<div class="col-sm-9">
           
-          <ul class="nav nav-tabs" id="myTab">
-            <li><a href="#messages" data-toggle="tab">Comandes</a></li>
+          <ul class="nav nav-tabs" id="myTab">            
             <li class="active"><a href="#settings" data-toggle="tab">Dades personals</a></li>
+            <li><a href="#messages" data-toggle="tab">Comandes</a></li>
           </ul>
           <div class="tab-content">                                         
-             <div class="tab-pane active" id="messages">
+             <div class="tab-pane" id="messages">
                
                <h2></h2>
                
@@ -123,7 +123,7 @@ body {
                 </ul> 
                
              </div><!--/tab-pane-->
-             <div class="tab-pane" id="settings">
+             <div class="tab-pane active" id="settings">
             		               	
                   <hr>
                   <form class="form" action="/usuari/desar" th:action="@{/usuari}" th:object="${dades}" method="post" id="registrationForm">
