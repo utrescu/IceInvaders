@@ -1,5 +1,7 @@
 package net.xaviersala.repositories;
 
+import javax.ws.rs.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +28,14 @@ public class UsuariService {
    * @param password contrasenya de l'usuari a crear
    * @return Usuari creat en la base de dades
    */
-  public Usuari crearUsuari(String username, String password) {
+  public Usuari crearUsuari(String username, String password, UsuariDades dades) {
     Usuari nouUsuari = new Usuari();
     nouUsuari.setUsername(username);
     nouUsuari.setContrasenya(passCode.encode(password + nouUsuari.getSalt()));
+    nouUsuari.setNom(dades.nom);
+    nouUsuari.setCognoms(dades.cognoms);
+    nouUsuari.setEmail(dades.email);
+    nouUsuari.setPoblacio(dades.poblacio);
     return usuaris.save(nouUsuari);    
   }
   
@@ -64,6 +70,22 @@ public class UsuariService {
     }
     
     return usuariTrobat;
+  }
+
+  /**
+   * Actualitza les dades de l'usuari especificat.
+   * @param username usuari
+   * @param dades dades de l'usuari
+   */
+  public void desaUsuari(String username, UsuariDades dades) {
+     // Potser hauria de tornar un error si no el troba
+     Usuari usuari = buscaUsuari(username);
+     if (usuari != null) {
+       usuari.setDades(dades);
+       usuaris.save(usuari);
+     } else {
+       throw new NotFoundException();
+     }
   }
 
   

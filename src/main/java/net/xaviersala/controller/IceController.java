@@ -5,15 +5,11 @@ package net.xaviersala.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +26,6 @@ import net.xaviersala.model.Producte;
 import net.xaviersala.model.Venda;
 import net.xaviersala.repositories.CistellaRepository;
 import net.xaviersala.repositories.ProducteRepository;
-import net.xaviersala.repositories.UsuariService;
 
 
 /**
@@ -39,15 +34,17 @@ import net.xaviersala.repositories.UsuariService;
  */
 @Controller
 @SessionAttributes({"cistella"})
-public class IceController implements ErrorController {
+public class IceController  {
   
   private static final Log log = LogFactory.getLog(IceController.class);
   
+  @Autowired
   ProducteRepository mongo;
-  CistellaRepository compres;
   
   @Autowired
-  UsuariService usuaris;
+  CistellaRepository compres;
+  
+  
   
   /**
    * Creació del control·lador passant-hi com a paràmetre la base de dades.
@@ -223,11 +220,15 @@ public class IceController implements ErrorController {
   public String checkout(@ModelAttribute("cistella") Cistella cistella, SessionStatus status, Model model) {
     
     log.info("... Intenta pagar ....");
+    
+    String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+    
     // Comprovo que n'hi ha algun
     if (!cistella.teVendes()) {
       return "redirect:/basket";
     } else {
         log.info("...... Paga!");
+        cistella.setUsername(username);
         // Desar la cistella
         model.addAttribute("compra", cistella);
         compres.save(cistella);    
@@ -266,28 +267,7 @@ public class IceController implements ErrorController {
 
     return "login";
   }
-  
-  @Secured("ROLE_ADMIN")  
-  @RequestMapping("/usuaris")
-  public String creaUsuaris() {
-    usuaris.crearUsuari("xavier", "sala");    
-    return "redirect:/";
-  }
-
-  @RequestMapping("/error")
-  public String error(HttpServletRequest request, HttpServletResponse response, Model model) {
-    
-//      model.addAttribute("status", response.getStatus());
-//      model.addAttribute("error", response.ge)
-     log.info("ERROR: Alguna cosa ha fallat" + response.getStatus());
-     return "error";
-  }
-    
-  @Override
-  public String getErrorPath() {
-    log.info("ERROR: Alguna cosa ha fallat");
-    return "error";
-  }
+   
 
 
   

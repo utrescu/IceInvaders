@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/header :: header">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Ice Invaders</title>
+<link rel="shortcut icon" href="">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<link href="/css/full.css" rel="stylesheet">
+<style>
+body {
+	padding-top: 50px;
+}
+</style>
+
+<!--[if IE]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top navbar-custom"
+		role="navigation"
+		th:replace="fragments/header :: header (menu='product')">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}"><img
+					style="max-width: 40px; margin-top: -7px;" src="/images/icein.png"></a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/home.html" th:href="@{/}">Home</a></li>
+					<li><a href="/products.html" th:href="@{/products}">Products</a></li>
+					<li><a href="/where.html" th:href="@{/where}">Where</a></li>
+					<li><a href="/about.html" th:href="@{/about}">About</a></li>
+				</ul>
+				<!-- Search -->
+				<div class="col-sm-3 col-md-3 pull-right">
+					<form class="navbar-form" role="search">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search"
+								name="srch-term" id="srch-term">
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- Login -->
+				<ul class="nav navbar-nav navbar-right">
+					<li th:if="${#authorization.expression('!isAuthenticated()')}">
+						<a href="/login.html" th:href="@{/login}">Login</a>
+					</li>
+					<li th:if="${#authorization.expression('isAuthenticated()')}">
+						<form action="/logout" th:action="@{/logout}" method="post">
+							<button class="btn btn-default navbar-btn">Logout</button>
+						</form>
+					</li>
+					<li><a href="/basket.html" th:href="@{/basket}"><span
+							class="glyphicon glyphicon-shopping-cart"></span></a></li>
+				</ul>
+			</div>
+			<!--.nav-collapse -->
+		</div>
+	</nav>
+
+<!-- Contingut -->
+<hr>
+<div class="container">
+	<div class="row">
+  		<div class="col-sm-10"><h1 th:text="${usuari}">Xavier</h1></div>
+    	<div class="col-sm-2"><a href="/usuari" class="pull-right">
+    	<img title="profile image" class="img-circle img-responsive" src="images/xavier.png"></a></div>
+    </div>
+    <div class="row">
+  		<div class="col-sm-3"><!--left col-->
+              
+          <ul class="list-group">
+            <li class="list-group-item text-muted">Perfil</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Alta</strong></span><span>2.13.2014</span></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Darrera visita</strong></span> Yesterday</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Nom</strong></span><span th:text="${dades.nom} + ' ' + ${dades.cognoms}">Xavier Sala</span></li>
+            
+          </ul> 
+               
+        </div><!--/col-3-->
+        
+    	<div class="col-sm-9">
+          
+          <ul class="nav nav-tabs" id="myTab">
+            <li><a href="#messages" data-toggle="tab">Comandes</a></li>
+            <li class="active"><a href="#settings" data-toggle="tab">Dades personals</a></li>
+          </ul>
+          <div class="tab-content">                                         
+             <div class="tab-pane active" id="messages">
+               
+               <h2></h2>
+               
+               <ul class="list-group">
+                  <li class="list-group-item text-muted">Comandes</li>
+                   <!-- Repetir -->
+                  <li class="list-group-item text-right">
+                      <a href="#" class="pull-left">Comanda id..</a> 12/12/2016
+                  </li>
+                   <!-- /Repetir -->
+                </ul> 
+               
+             </div><!--/tab-pane-->
+             <div class="tab-pane" id="settings">
+            		               	
+                  <hr>
+                  <form class="form" action="/usuari/desar" th:action="@{/usuari}" th:object="${dades}" method="post" id="registrationForm">
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>Nom</h4></label>
+                              <input type="text" class="form-control" name="nom" id="nom" 
+                                     placeholder="Nom..." title="Entra el nom .." 
+                                     th:field="*{nom}">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <label for="last_name"><h4>Cognoms</h4></label>
+                              <input type="text" class="form-control" name="cognoms" id="cognoms" 
+                                     placeholder="Cognoms..." title="entra els cognoms .." 
+                                     th:field="*{cognoms}">
+                          </div>
+                      </div>
+          
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="phone"><h4>Telèfon</h4></label>
+                              <input type="text" class="form-control" name="phone" id="phone" 
+                                     placeholder="Telèfon..." title="entra el telèfon .." th:field="*{telefon}">
+                          </div>
+                      </div>
+          
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                             <label for="mobile"><h4>Email</h4></label>
+                              <input type="email" class="form-control" name="email" id="email" 
+                                     placeholder="Mòbil..." title="Entra el correu electrònic .." th:value="*{email}">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="adreca"><h4>Adreça</h4></label>
+                              <input type="text" class="form-control" name="adreca" id="adreca" 
+                                     placeholder="Carrer o plaça" title="Entra la teva adreça .." th:value="*{adreca}">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="location"><h4>Població</h4></label>
+                              <input type="text" class="form-control" name="poblacio" id="poblacio" 
+                                     placeholder="població" title="entra la població" th:value="*{poblacio}">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="password"><h4>Contrasenya</h4></label>
+                              <input type="password" class="form-control" name="password" id="password" 
+                                     placeholder="password" title="entra la contrasenya ..">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <label for="password2"><h4>Verifica la contrasenya</h4></label>
+                              <input type="password" class="form-control" name="password2" id="password2" 
+                                     placeholder="password2" title="verifica la contrasenya ..">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                           <div class="col-xs-12">
+                                <br>
+                              	<button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Desar</button>
+                               	<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                            </div>
+                      </div>
+              	</form>
+               
+              </div><!--/tab-pane-->
+          </div><!--/tab-content-->
+
+        </div><!--/col-9-->
+    </div><!--/row-->
+    </div>
+    
+<!-- /Contingut -->
+    
+	<footer th:replace="fragments/header :: footer"></footer>
+
+	<div th:replace="fragments/header :: script" th:remove="tag"> 	
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    </div>
+</body>
+</html>

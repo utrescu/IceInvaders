@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/about", 
             "/empty", 
             "/webjars/**").permitAll()
-        .antMatchers("/usuaris").hasAuthority("ROLE_ADMIN")
+        .antMatchers("/add_usuaris").hasAuthority("ROLE_ADMIN")
         .anyRequest().authenticated()
         .and()
     .formLogin()
