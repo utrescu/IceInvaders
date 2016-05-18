@@ -116,8 +116,10 @@ body {
                <ul class="list-group">
                   <li class="list-group-item text-muted">Comandes</li>
                    <!-- Repetir -->
-                  <li class="list-group-item text-right">
-                      <a href="#" class="pull-left">Comanda id..</a> 12/12/2016
+                  <li class="list-group-item text-right" th:each="comanda : ${comandes}">
+                      <a href="/usuari/comanda" th:href="@{|/usuari/comanda?id=${comanda.id}|}" 
+                         class="pull-left" th:text="${comanda.id}">Comanda id..</a> 
+                      <span th:text="${#dates.format(comanda.dia, 'dd MMM yyyy')}">15/4/2017</span>
                   </li>
                    <!-- /Repetir -->
                 </ul> 
