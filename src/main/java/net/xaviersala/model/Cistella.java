@@ -23,7 +23,7 @@ public class Cistella {
    */
   public Cistella() {
     dia = new Date();
-    vendes = new ArrayList<Venda>();
+    vendes = new ArrayList<>();
     username="anomymous";
     total = 0;
   }
@@ -101,6 +101,10 @@ public class Cistella {
     this.vendes = vendes;
   }
   
+  public float getTotal() {
+    return total;
+  }
+  
   /**
    * @param total the total to set
    */
@@ -114,23 +118,23 @@ public class Cistella {
    */
   public void afegirProducte(Venda venda) {
     vendes.add(venda);    
-    total = getTotal();
+    total = getTotalCistella();
   }
   
   public boolean teVendes() {
-    return (vendes.size() != 0);
+    return !vendes.isEmpty();
   }
   
   /**
    * Calcula el total de la venda. 
    * @return obtenir el preu total de la cistella
    */
-  public float getTotal() {
-    float total = 0;
+  public float getTotalCistella() {
+    float sumaVendes = 0;
     for(Venda venda: vendes) {
-      total = total + (venda.getQuantitat() * venda.getProducte().getPreu());
+      sumaVendes = sumaVendes + (venda.getQuantitat() * venda.getProducte().getPreu());
     }
-    return total;
+    return sumaVendes;
   }
 
   /* (non-Javadoc)

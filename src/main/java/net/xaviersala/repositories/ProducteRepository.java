@@ -6,7 +6,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import net.xaviersala.model.Producte;
 
-// public interface ProducteRepository extends MongoRepository<Producte, String> {
 public interface ProducteRepository extends PagingAndSortingRepository<Producte, String> { 
   
   public Producte findByNom(String nom);

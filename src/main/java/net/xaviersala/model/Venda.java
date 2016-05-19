@@ -6,7 +6,7 @@ public class Venda {
   int quantitat;
   
   public Venda() {
-   
+    // Default constructor needed
   }
   
   public Venda(Producte producte, int quantitat) {

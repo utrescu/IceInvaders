@@ -27,11 +27,24 @@ public class UserController {
   
   private static final Log log = LogFactory.getLog(UserController.class);
   
-  @Autowired
-  UsuariService usuaris;
   
-  @Autowired
+  UsuariService usuaris;
   CistellaRepository comandes;
+  
+  /**
+   * Constructor del Controller.
+   * 
+   * La idea és que sigui comprovable i per això li passem
+   * per paràmetres els repositoris. 
+   * 
+   * @param usuaris repositori d'usuaris
+   * @param compres repositori de comandes
+   */
+  @Autowired
+  public UserController(UsuariService usuaris, CistellaRepository compres) {
+    this.usuaris = usuaris;
+    this.comandes = compres;
+  }
   
   /**
    * Mostrar el perfil de l'usuari.

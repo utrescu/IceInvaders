@@ -38,13 +38,8 @@ public class IceController  {
   
   private static final Log log = LogFactory.getLog(IceController.class);
   
-  @Autowired
   ProducteRepository mongo;
-  
-  @Autowired
   CistellaRepository compres;
-  
-  
   
   /**
    * Creació del control·lador passant-hi com a paràmetre la base de dades.
@@ -69,12 +64,10 @@ public class IceController  {
    * @return pàgina a mostrar
    */
   @RequestMapping("/")
-  public String arrel(Model model) {
+  public String arrel() {
 
-    // Localitzar els més usats i posar-los al model
-
-    log.info(".. Pàgina principal: ");
-    // model.put("productes", productes);
+    // Podria localitzar els més usats i posar-los al model
+    log.info(".. Pàgina principal: ");    
     return "home";
   }
 
@@ -120,24 +113,28 @@ public class IceController  {
    * @return pàgina a carregar
    */
   @RequestMapping("/products")
-  public String cataleg(@RequestParam (required = false) String keyword, @RequestParam(required = false) Integer page, Model model) {
-    List<Producte> productes = null;
-    Page<Producte> pagina = null;
-        
-    if (page == null) page = 0;
+  public String llistaProductes(@RequestParam (required = false) String keyword, @RequestParam(required = false) Integer page, Model model) {
+    List<Producte> productes;
+    Page<Producte> paginaDeProductes;
+
+    int numeroDePagina = 0;
     
-    log.info(".. Productes " + keyword + "(" + page + ")");
+    if (page != null) {
+       numeroDePagina =  page;        
+    }
+    
+    log.info(".. Productes " + keyword + "(" + numeroDePagina + ")");
     if (keyword==null) {
       
-      pagina = mongo.findAll(new PageRequest(page, 6));
+      paginaDeProductes = mongo.findAll(new PageRequest(numeroDePagina, 6));
       
     } else {
-      pagina = mongo.findByNom(keyword, new PageRequest(page, 6));
+      paginaDeProductes = mongo.findByNom(keyword, new PageRequest(numeroDePagina, 6));
     }
-    productes = pagina.getContent();
-    log.info("........ " + productes);
+    productes = paginaDeProductes.getContent();
+    log.debug("........ " + productes);
     
-    model.addAttribute("pagina",page);
+    model.addAttribute("pagina",numeroDePagina);
     model.addAttribute("productes", productes);    
     return "products";
   }
@@ -150,7 +147,7 @@ public class IceController  {
    * @return pàgina a carregar
    */
   @RequestMapping(value="/product/{nom}")
-  public String enquesta(@PathVariable("nom") String nom, Model model) {
+  public String mostraProducte(@PathVariable("nom") String nom, Model model) {
     
     log.info(".. Demana per " + nom);
     Producte producte = mongo.findByNom(nom);
@@ -168,8 +165,7 @@ public class IceController  {
    * @return pàgina amb la cistella
    */
   @RequestMapping("/basket")
-  public String cistella(@ModelAttribute("cistella") Cistella cistella, Model model) {
-    // comprovaSiExisteixLaCistella(model, cistella); 
+  public String cistella() {
     log.info("... Mostrar Cistella");
     return "basket";
   }
@@ -180,10 +176,7 @@ public class IceController  {
    * @return pàgina amb la cistella
    */
   @RequestMapping(value="/basket", method=RequestMethod.POST)
-  public String afegirCistella(@RequestParam("producte") String nomProducte, @ModelAttribute("cistella") Cistella cistella, Model model) {
-    
-    // Jo diria que no fa falta...
-    // comprovaSiExisteixLaCistella(model, cistella); 
+  public String afegirCistella(@RequestParam("producte") String nomProducte, @ModelAttribute("cistella") Cistella cistella) {
     
     if (nomProducte != null) {
         Producte producte = mongo.findOne(nomProducte);
@@ -195,21 +188,6 @@ public class IceController  {
         
     return "redirect:/basket";
   }
-  
-//  /**
-//   * Bàsicament comprova si en el model hi ha un atribut que es diu "cistella"
-//   * 
-//   * Em penso que no cal.
-//   * 
-//   * @param model
-//   */
-//  private void comprovaSiExisteixLaCistella(Model model, Cistella cistella) {
-//    if(!model.containsAttribute("cistella")) {
-//      log.info("... Crear Cistella");
-//      // Comprovar si ja està identificat
-//      model.addAttribute("cistella", cistella);
-//    }
-//  }
   
   /**
    * Passar a pagar.
@@ -245,7 +223,7 @@ public class IceController  {
    * @return Torna a la pàgina principal
    */
   @RequestMapping("/empty")
-  public String empty(@ModelAttribute("cistella") Cistella cistella, SessionStatus status) {
+  public String empty(SessionStatus status) {
     status.setComplete();
     return "redirect:/";
   }
@@ -263,8 +241,7 @@ public class IceController  {
 
     if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
       return "redirect:/";
-    }
-
+    }    
     return "login";
   }
    

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -30,8 +29,7 @@ public class UserMongoAuthenticatorProvider implements AuthenticationProvider {
   }
 
   @Override
-  public Authentication authenticate(final Authentication authentication) 
-      throws AuthenticationException {
+  public Authentication authenticate(final Authentication authentication) {
     String nomUsuari = authentication.getName();
     String textContrasenya = authentication.getCredentials().toString();
     
@@ -44,18 +42,16 @@ public class UserMongoAuthenticatorProvider implements AuthenticationProvider {
     Usuari usuariIdentificat = usuaris.identifica(nomUsuari, textContrasenya);
     if (usuariIdentificat == null) {
       log.warn("Usuari " + nomUsuari + " no trobat");
-      // throw new BadCredentialsException("user or password incorrect");
+      // Potser hauria de fer una cosa com throw new BadCredentialsException("user or password incorrect");
       return null;
     }
 
     List<GrantedAuthority> grantedAuths = usuariIdentificat.getAuthorities();    
-    // grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
     
-    Authentication auth = new UsernamePasswordAuthenticationToken(
+    return new UsernamePasswordAuthenticationToken(
         usuariIdentificat.getUsername(), 
         usuariIdentificat.getContrasenya(), 
-        grantedAuths);
-    return auth;
+        grantedAuths);    
   }
 
   @Override

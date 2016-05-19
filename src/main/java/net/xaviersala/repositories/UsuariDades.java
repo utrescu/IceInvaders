@@ -10,7 +10,7 @@ public class UsuariDades {
   String poblacio;
   
   public UsuariDades() {
-    
+    // Default constructor to fill default form.
   }
 
   public UsuariDades(String nom, String cognoms, String email, String poblacio) {
