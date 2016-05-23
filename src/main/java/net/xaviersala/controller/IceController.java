@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +23,7 @@ import net.xaviersala.model.Cistella;
 import net.xaviersala.model.Producte;
 import net.xaviersala.model.Venda;
 import net.xaviersala.repositories.CistellaRepository;
-import net.xaviersala.repositories.ProducteRepository;
+import net.xaviersala.repositories.ProducteService;
 
 
 /**
@@ -36,9 +34,11 @@ import net.xaviersala.repositories.ProducteRepository;
 @SessionAttributes({"cistella"})
 public class IceController  {
   
+  private static final int ARTICLES_PER_PAGINA = 6;
+
   private static final Log log = LogFactory.getLog(IceController.class);
   
-  ProducteRepository mongo;
+  ProducteService serveiProductes;
   CistellaRepository compres;
   
   /**
@@ -46,8 +46,8 @@ public class IceController  {
    * @param mongo
    */
   @Autowired
-  public IceController(ProducteRepository mongo, CistellaRepository compres) {
-    this.mongo = mongo;
+  public IceController(ProducteService serveiProductes, CistellaRepository compres) {
+    this.serveiProductes = serveiProductes;
     this.compres = compres;
   }
   
@@ -114,8 +114,10 @@ public class IceController  {
    */
   @RequestMapping("/products")
   public String llistaProductes(@RequestParam (required = false) String keyword, @RequestParam(required = false) Integer page, Model model) {
-    List<Producte> productes;
-    Page<Producte> paginaDeProductes;
+    
+    List<Producte> llistaProductes;
+    long totalProductes;
+    
 
     int numeroDePagina = 0;
     
@@ -124,18 +126,23 @@ public class IceController  {
     }
     
     log.info(".. Productes " + keyword + "(" + numeroDePagina + ")");
-    if (keyword==null) {
-      
-      paginaDeProductes = mongo.findAll(new PageRequest(numeroDePagina, 6));
+    if (keyword == null) {
+      model.addAttribute("url", "");
+      llistaProductes = serveiProductes.buscaPaginaTotsProductes(numeroDePagina, ARTICLES_PER_PAGINA);      
       
     } else {
-      paginaDeProductes = mongo.findByNom(keyword, new PageRequest(numeroDePagina, 6));
+      // Tornem a posar l'atribut
+      model.addAttribute("url", "&keyword=" + keyword);
+      llistaProductes = serveiProductes.buscaPaginaProductesPerNom(keyword, numeroDePagina, ARTICLES_PER_PAGINA);
     }
-    productes = paginaDeProductes.getContent();
-    log.debug("........ " + productes);
+    log.debug("........ " + llistaProductes);
     
+    // Provablement ho hauria de tenir calculat?
+    totalProductes = serveiProductes.totalProductes(keyword);
+    
+    model.addAttribute("pagines", (totalProductes/ARTICLES_PER_PAGINA) + 1);
     model.addAttribute("pagina",numeroDePagina);
-    model.addAttribute("productes", productes);    
+    model.addAttribute("productes", llistaProductes);    
     return "products";
   }
   
@@ -150,7 +157,7 @@ public class IceController  {
   public String mostraProducte(@PathVariable("nom") String nom, Model model) {
     
     log.info(".. Demana per " + nom);
-    Producte producte = mongo.findByNom(nom);
+    Producte producte = serveiProductes.buscaProductePerNom(nom);
     if (producte == null) {
       return "error";
     }
@@ -176,10 +183,10 @@ public class IceController  {
    * @return pàgina amb la cistella
    */
   @RequestMapping(value="/basket", method=RequestMethod.POST)
-  public String afegirCistella(@RequestParam("producte") String nomProducte, @ModelAttribute("cistella") Cistella cistella) {
+  public String afegirCistella(@RequestParam("producte") String idProducte, @ModelAttribute("cistella") Cistella cistella) {
     
-    if (nomProducte != null) {
-        Producte producte = mongo.findOne(nomProducte);
+    if (idProducte != null) {
+        Producte producte = serveiProductes.buscaProducte(idProducte);
         if (producte != null) {
           log.info("... Afegir " + producte.getNom() + " a la cistella");
           cistella.afegirProducte(new Venda(producte,1));

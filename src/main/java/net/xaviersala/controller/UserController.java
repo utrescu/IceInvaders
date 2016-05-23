@@ -115,6 +115,23 @@ public class UserController {
     return "comanda";
   }
   
+  /**
+   * TODO: Encara no està fet
+   * @return
+   */
+  @RequestMapping("/usuari/crear")
+  public String altaUsuari() {
+    return "signup";
+  }
+  
+  /**
+   * TODO: Donar d'alta un usuari.
+   * @return
+   */
+  @RequestMapping(value="/usuari/crear", method=RequestMethod.POST)
+  public String crearNouUsuari() {
+    return "redirect:/usuari";
+  }
   
   /**
    * Temporal per afegir l'usuari xavier.

@@ -1,7 +1,5 @@
 package net.xaviersala.repositories;
 
-import javax.ws.rs.NotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,7 +82,7 @@ public class UsuariService {
        usuari.setDades(dades);
        usuaris.save(usuari);
      } else {
-       throw new NotFoundException();
+       throw new RuntimeException();
      }
   }
 
