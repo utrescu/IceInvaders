@@ -109,15 +109,6 @@ body {
 			</div>
 		</div>
 		<div class="panel-footer">
-<!-- 		    <nav> -->
-<!-- 		      <ul class="pager"> -->
-<!-- 				<li class="pager-prev"><a th:if="${pagina > 0}" href="products.html" -->
-<!-- 				th:href="@{'/products?page=' + ${pagina - 1}}">Anterior</a></li> -->
-				
-<!-- 				<li class="pager-next"><a th:if="${#lists.size(productes) == 6}" href="products.html" -->
-<!-- 				th:href="@{'/products?page=' + ${pagina + 1}}">Següent</a></li> -->
-<!-- 			  </ul> -->
-<!-- 			</nav> -->
 				<nav>
 					<ul class="pagination">
 						<li th:each="numero: ${#numbers.sequence( 1, pagines )}">

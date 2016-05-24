@@ -227,6 +227,7 @@ public class Usuari {
   }
 
   public void setDades(UsuariDades dades) {
+          
      nom = dades.getNom();
      cognoms = dades.getCognoms();
      telefon = dades.getTelefon();
@@ -237,12 +238,15 @@ public class Usuari {
   
   public UsuariDades getDades() {
     UsuariDades dades = new UsuariDades();
+    
+    dades.setUsername(username);    
     dades.setNom(nom);
     dades.setCognoms(cognoms);
     dades.setAdreca(adreca);
     dades.setPoblacio(poblacio);
     dades.setEmail(email);
     dades.setTelefon(telefon);
+    
     return dades;
   }
   

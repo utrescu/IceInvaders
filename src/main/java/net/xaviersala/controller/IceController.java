@@ -128,17 +128,17 @@ public class IceController  {
     log.info(".. Productes " + keyword + "(" + numeroDePagina + ")");
     if (keyword == null) {
       model.addAttribute("url", "");
-      llistaProductes = serveiProductes.buscaPaginaTotsProductes(numeroDePagina, ARTICLES_PER_PAGINA);      
+      llistaProductes = serveiProductes.buscaTotsProductesPerPagines(numeroDePagina, ARTICLES_PER_PAGINA);      
       
     } else {
       // Tornem a posar l'atribut
       model.addAttribute("url", "&keyword=" + keyword);
-      llistaProductes = serveiProductes.buscaPaginaProductesPerNom(keyword, numeroDePagina, ARTICLES_PER_PAGINA);
+      llistaProductes = serveiProductes.buscaProductesPerNomPerPagines(keyword, numeroDePagina, ARTICLES_PER_PAGINA);
     }
     log.debug("........ " + llistaProductes);
     
     // Provablement ho hauria de tenir calculat?
-    totalProductes = serveiProductes.totalProductes(keyword);
+    totalProductes = serveiProductes.comptaProductes(keyword);
     
     model.addAttribute("pagines", (totalProductes/ARTICLES_PER_PAGINA) + 1);
     model.addAttribute("pagina",numeroDePagina);

@@ -85,57 +85,61 @@ body {
 <hr>
 <div class="container">
 	<div class="row">
-  		<div class="col-sm-10"><h1 th:text="${usuari}">Xavier</h1></div>
-    	<div class="col-sm-2"><a href="/usuari" class="pull-right">
-    	<img title="profile image" class="img-circle img-responsive" src="images/xavier.png"></a></div>
+  		<div class="col-sm-10"><h1>Nou usuari</h1></div>
+    	<div class="col-sm-2">
+    	   <a href="/" class="pull-right"><img title="ice" class="img-responsive" src="images/tux.png"></a>
+    	</div>
     </div>
     <div class="row">
   		<div class="col-sm-3"><!--left col-->
               
-          <ul class="list-group">
-            <li class="list-group-item text-muted">Perfil</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Alta</strong></span><span>2.13.2014</span></li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Darrera visita</strong></span> Yesterday</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Nom</strong></span><span th:text="${dades.nom} + ' ' + ${dades.cognoms}">Xavier Sala</span></li>
-            
-          </ul> 
+ 			<img title="ice invaders" class="img-circle img-responsive" src="images/invader.jpg">
                
         </div><!--/col-3-->
         
     	<div class="col-sm-9">
           
-          <ul class="nav nav-tabs" id="myTab">            
-            <li class="active"><a href="#settings" data-toggle="tab">Dades personals</a></li>
-            <li><a href="#messages" data-toggle="tab">Comandes</a></li>
-          </ul>
-          <div class="tab-content">                                         
-             <div class="tab-pane" id="messages">
-               
-               <h2></h2>
-               
-               <ul class="list-group">
-                  <li class="list-group-item text-muted">Comandes</li>
-                   <!-- Repetir -->
-                  <li class="list-group-item text-right" th:each="comanda : ${comandes}">
-                      <a href="/usuari/comanda" th:href="@{|/usuari/comanda?id=${comanda.id}|}" 
-                         class="pull-left" th:text="${comanda.id}">Comanda id..</a> 
-                      <span th:text="${#dates.format(comanda.dia, 'dd MMM yyyy')}">15/4/2017</span>
-                  </li>
-                   <!-- /Repetir -->
-                </ul> 
-               
-             </div><!--/tab-pane-->
-             <div class="tab-pane active" id="settings">
-            		               	
+          <div class="tab-content">                                                     		               	
                   <hr>
-                  <form class="form" action="/usuari/desar" th:action="@{/usuari}" th:object="${dades}" method="post" id="registrationForm">
-                      <input type="hidden" name="username" id="username" th:field="*{username}">
-                      <div class="form-group">                          
+                  <form class="form" action="/alta" th:action="@{/alta}" th:object="${dades}" method="post" id="registrationForm">
+                      <div class="form-group">
+                      	<label for="username"><h4>Usuari</h4></label>
+                      	<input type="text" class="form-control" name="username" id="username"
+                      	       placeholder="Nom d'usuari" title="Nom d'usuari"
+                      	       th:field="*{username}" required>
+                      	<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger">
+                      	    Username Error
+                      	</div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="password"><h4>Contrasenya</h4></label>
+                              <input type="password" class="form-control" name="password" id="password" 
+                                     placeholder="password" title="entra la contrasenya .."
+                                     th:field="*{contrasenya}" required>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <label for="password2"><h4>Verifica la contrasenya</h4></label>
+                              <input type="password" class="form-control" name="password2" id="password2" 
+                                     placeholder="password2" title="verifica la contrasenya .."
+                                     th:field="*{repeatContrasenya}" required>
+                          </div>
+                      </div>
+                      <div th:if="${#fields.hasErrors('contrasenya')}" th:errors="*{contrasenya}" class="alert alert-danger">
+                      	    Contrasenya Error
+                      	</div>
+                      
+                      <div class="form-group">
+                          
                           <div class="col-xs-6">
                               <label for="first_name"><h4>Nom</h4></label>
                               <input type="text" class="form-control" name="nom" id="nom" 
                                      placeholder="Nom..." title="Entra el nom .." 
-                                     th:field="*{nom}">
+                                     th:field="*{nom}" >
                           </div>
                       </div>
                       <div class="form-group">
@@ -161,11 +165,11 @@ body {
                           <div class="col-xs-6">
                              <label for="mobile"><h4>Email</h4></label>
                               <input type="email" class="form-control" name="email" id="email" 
-                                     placeholder="email ..." title="Entra el correu electrònic .." th:value="*{email}">
+                                     placeholder="email ..." title="Entra el correu electrònic .." th:value="*{email}" 
+                                     required>
                           </div>
                       </div>
-                      <div class="form-group">
-                          
+                      <div class="form-group">                          
                           <div class="col-xs-6">
                               <label for="adreca"><h4>Adreça</h4></label>
                               <input type="text" class="form-control" name="adreca" id="adreca" 
@@ -181,27 +185,6 @@ body {
                           </div>
                       </div>
                       <div class="form-group">
-                          
-                          <div class="col-xs-6">
-                              <label for="password"><h4>Contrasenya</h4></label>
-                              <input type="password" class="form-control" name="contrasenya" id="contrasenya" 
-                                     placeholder="contrasenya" title="entra la contrasenya .." 
-                                     th:value="*{contrasenya}" required>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          
-                          <div class="col-xs-6">
-                            <label for="password2"><h4>Verifica la contrasenya</h4></label>
-                              <input type="password" class="form-control" name="repeatContrasenya" id="repeatContrasenya" 
-                                     placeholder="contrasenya" title="verifica la contrasenya .." 
-                                     th:value="*{repeatContrasenya}" required>
-                          </div>
-                      </div>
-                      <div th:if="${#fields.hasErrors('contrasenya')}" th:errors="*{contrasenya}" class="alert alert-danger">
-                      	    Contrasenya Error
-                      </div>
-                      <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
                               	<button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Desar</button>
@@ -210,7 +193,7 @@ body {
                       </div>
               	</form>
                
-              </div><!--/tab-pane-->
+              
           </div><!--/tab-content-->
 
         </div><!--/col-9-->

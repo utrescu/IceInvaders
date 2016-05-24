@@ -26,15 +26,19 @@ public class UsuariService {
    * @param password contrasenya de l'usuari a crear
    * @return Usuari creat en la base de dades
    */
-  public Usuari crearUsuari(String username, String password, UsuariDades dades) {
+  public Usuari crearUsuari(UsuariDades dades) {
+    
     Usuari nouUsuari = new Usuari();
-    nouUsuari.setUsername(username);
-    nouUsuari.setContrasenya(passCode.encode(password + nouUsuari.getSalt()));
-    nouUsuari.setNom(dades.nom);
-    nouUsuari.setCognoms(dades.cognoms);
-    nouUsuari.setEmail(dades.email);
-    nouUsuari.setPoblacio(dades.poblacio);
-    return usuaris.save(nouUsuari);    
+    nouUsuari.setUsername(dades.getUsername());    
+    nouUsuari.setContrasenya(passCode.encode(dades.getContrasenya() + nouUsuari.getSalt()));
+    nouUsuari.setNom(dades.getNom());
+    nouUsuari.setCognoms(dades.getCognoms());
+    nouUsuari.setTelefon(dades.getTelefon());
+    nouUsuari.setEmail(dades.getEmail());
+    nouUsuari.setAdreca(dades.getAdreca());
+    nouUsuari.setPoblacio(dades.getPoblacio());
+    return usuaris.save(nouUsuari);   
+    
   }
   
   /**
@@ -44,6 +48,15 @@ public class UsuariService {
    */
   public Usuari buscaUsuari(String nom) {
     return usuaris.findByUsername(nom);
+  }
+  
+  /**
+   * Comprova si l'username està agafat o no.
+   * @param nom username
+   * @return true o false
+   */
+  public boolean usuariExisteix(String nom) {
+    return usuaris.findByUsername(nom) != null;
   }
   
   /**

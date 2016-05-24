@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/basket", 
             "/about", 
             "/empty", 
+            "/alta",
             "/webjars/**").permitAll()
         .antMatchers("/add_usuaris").hasAuthority("ROLE_ADMIN")
         .anyRequest().authenticated()

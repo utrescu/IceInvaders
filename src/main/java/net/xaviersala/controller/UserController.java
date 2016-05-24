@@ -11,16 +11,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.xaviersala.model.Cistella;
 import net.xaviersala.model.Usuari;
 import net.xaviersala.repositories.CistellaRepository;
 import net.xaviersala.repositories.UsuariDades;
 import net.xaviersala.repositories.UsuariService;
+import net.xaviersala.validators.UsuariValidator;
 
 @Controller
 public class UserController {
@@ -30,6 +34,9 @@ public class UserController {
   
   UsuariService usuaris;
   CistellaRepository comandes;
+  
+  @Autowired  
+  private UsuariValidator validador;
   
   /**
    * Constructor del Controller.
@@ -44,7 +51,7 @@ public class UserController {
   public UserController(UsuariService usuaris, CistellaRepository compres) {
     this.usuaris = usuaris;
     this.comandes = compres;
-  }
+  } 
   
   /**
    * Mostrar el perfil de l'usuari.
@@ -72,6 +79,7 @@ public class UserController {
     model.addAttribute("comandes", cistelles);
     return "account";
   }
+   
   
   /**
    * Desar les noves dades de l'usuari
@@ -80,15 +88,16 @@ public class UserController {
    * @return Enviem al perfil
    */
   @RequestMapping(value="/usuari", method=RequestMethod.POST)
-  public String desarUsuari(@ModelAttribute @Valid UsuariDades dades, BindingResult bindingResult) {
+  public String desarUsuari(@ModelAttribute("dades") @Valid UsuariDades dades, 
+      BindingResult resultat) {
     
+    String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();        
     
-    if (bindingResult.hasErrors()) {
+    if (resultat.hasErrors()) {
       log.error("Errors en l'actualització del perfil");
       return "account";
     }
 
-    String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
     log.info("Actualitzar perfil: " + username);
     usuaris.desaUsuari(username, dades); 
     return "redirect:/usuari";
@@ -115,31 +124,72 @@ public class UserController {
     return "comanda";
   }
   
+  
+  @InitBinder
+  public void initBinder(WebDataBinder binder) {
+      binder.addValidators(validador);
+  }
+  
   /**
-   * TODO: Encara no està fet
+   * Formulari per la creació d'un usuari.
    * @return
    */
-  @RequestMapping("/usuari/crear")
-  public String altaUsuari() {
+  @RequestMapping("/alta")
+  public String altaUsuari(Model model) {
+    model.addAttribute("dades", new UsuariDades());
     return "signup";
   }
   
   /**
-   * TODO: Donar d'alta un usuari.
+   * Crear un nou usuari.
+   * 
+   * @param dades dades de l'usuari
+   * @param resultat resultat de la validació
+   * @param redirectAttributes dades pel redirect
    * @return
    */
-  @RequestMapping(value="/usuari/crear", method=RequestMethod.POST)
-  public String crearNouUsuari() {
+  @RequestMapping(value="/alta", method=RequestMethod.POST)
+  public String crearNouUsuari(
+      @Valid @ModelAttribute("dades") UsuariDades dades,
+      BindingResult resultat,  Model model,
+      final RedirectAttributes redirectAttributes) {
+    
+    if (resultat.hasErrors()) {
+      model.addAttribute("dades", dades);
+      log.info("Dades incorrectes" + resultat.getFieldErrors());      
+      return "signup";
+    }
+    
+    if (usuaris.usuariExisteix(dades.getUsername())) {
+       resultat.rejectValue("username", "", "Nom d'usuari incorrecte");
+       log.info("Usuari existent" + dades.getUsername());
+       return "signup";
+    }
+    
+    // Crear l'usuari
+    usuaris.crearUsuari(dades);
+    redirectAttributes.addFlashAttribute("message", "usuari creat!");   
     return "redirect:/usuari";
   }
   
   /**
    * Temporal per afegir l'usuari xavier.
+   * 
+   *  A ELIMINAR
+   * 
    * @return
    */
   @RequestMapping("/add_usuaris")
   public String creaUsuaris() {
-    usuaris.crearUsuari("xavier", "sala", new UsuariDades("Xavier", "Sala", "x@x.net", "Cabanes"));    
+    
+    UsuariDades dades = new UsuariDades();
+    dades.setUsername("xavier");
+    dades.setContrasenya("sala");
+    dades.setNom("Xavier");
+    dades.setCognoms("Sala");
+    dades.setEmail("xavier@local.com");
+    
+    usuaris.crearUsuari(dades);    
     return "redirect:/";
   }
 

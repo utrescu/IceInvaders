@@ -1,6 +1,16 @@
 package net.xaviersala.repositories;
 
+import javax.validation.constraints.Size;
+
 public class UsuariDades {
+  
+  @Size(min=3, max=30, message="Ha de tenir 3 caràcters com a mínim")
+  String username;
+  
+  @Size(min=6, message="Ha de tenir 6 caràcters com a mínim")
+  String contrasenya;
+  @Size(min=6)
+  String repeatContrasenya;
   
   String nom;
   String cognoms;
@@ -10,15 +20,51 @@ public class UsuariDades {
   String poblacio;
   
   public UsuariDades() {
-    // Default constructor to fill default form.
+    // Default constructor to fill default form.    
+  }
+    
+  /**
+   * @return the username
+   */
+  public String getUsername() {
+    return username;
   }
 
-  public UsuariDades(String nom, String cognoms, String email, String poblacio) {
-    this.nom = nom;
-    this.cognoms = cognoms;
-    this.email = email;
-    this.poblacio = poblacio;
+  /**
+   * @param username the username to set
+   */
+  public void setUsername(String username) {
+    this.username = username;
   }
+
+  /**
+   * @return the password
+   */
+  public String getContrasenya() {
+    return contrasenya;
+  }
+
+  /**
+   * @param password the password to set
+   */
+  public void setContrasenya(String contrasenya) {
+    this.contrasenya = contrasenya;
+  }
+
+  /**
+   * @return the repeatPassword
+   */
+  public String getRepeatContrasenya() {
+    return repeatContrasenya;
+  }
+
+  /**
+   * @param repeatPassword the repeatPassword to set
+   */
+  public void setRepeatContrasenya(String repeatContrasenya) {
+    this.repeatContrasenya = repeatContrasenya;
+  }
+
   /**
    * @return the nom
    */

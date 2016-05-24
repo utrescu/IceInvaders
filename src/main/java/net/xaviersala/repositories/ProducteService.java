@@ -46,14 +46,19 @@ public class ProducteService {
    * @param articlesPerPagina el número d'articles per pàgina
    * @return
    */
-  public List<Producte> buscaPaginaTotsProductes(int pagina, int articlesPerPagina) {
+  public List<Producte> buscaTotsProductesPerPagines(int pagina, int articlesPerPagina) {
     Page<Producte> paginaDeProductes; 
     
     paginaDeProductes = repositoriProductes.findAll(new PageRequest(pagina, articlesPerPagina));
     return paginaDeProductes.getContent();
   }
   
-  public long totalProductes(String nom) {
+  /**
+   * Compta els productes, si es passa null els compta tots.
+   * @param nom nom a cercar
+   * @return
+   */
+  public long comptaProductes(String nom) {
     if (nom == null) {
       return repositoriProductes.count();
     } else {
@@ -68,7 +73,7 @@ public class ProducteService {
    * @param articlesPerPagina articles de cada pàgina
    * @return
    */
-  public List<Producte> buscaPaginaProductesPerNom(String nom, int pagina, int articlesPerPagina) {
+  public List<Producte> buscaProductesPerNomPerPagines(String nom, int pagina, int articlesPerPagina) {
     Page<Producte> paginaDeProductes; 
     
     paginaDeProductes = repositoriProductes.findByNomContainingIgnoreCase(nom, new PageRequest(pagina, articlesPerPagina));
