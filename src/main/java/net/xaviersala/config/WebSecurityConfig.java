@@ -33,6 +33,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       return new BCryptPasswordEncoder();
   }
   
+  /**
+   * Definim quin és l'accés que cal per les determinades url.
+   * 
+   */
   @Override
   protected void configure(HttpSecurity http) throws Exception {    
     http
@@ -60,7 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
   
   /**
-   * Seguretat web no necessària per les adreces de recursos bàsics: 
+   * Definim quines són les adreces que no necessiten seguretat.
+   * 
+   * No és necessàri accés segur per les adreces de recursos bàsics: 
    * CSS, Javascript, Imatges, tipus de lletres.
    */
   @Override
@@ -71,10 +77,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
   
   
+  /**
+   * Configuració de l'autenticació dels usuaris. 
+   * 
+   * Ho he provat de dues formes: 
+   * 
+   * 1. Afegint els usuaris amb l'autenticador
+   * de memòria
+   *    
+   *    auth.inMemoryAuthentication().withUser("usuari").password("contrasenya").roles("USER");
+   *    auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+   * 
+   * 2. Amb un validador personalitzat, MongoAuthenticationProvider, que identifica els usuaris
+   * a la base de dades. Aquest és el que he deixat
+   * 
+   * @param auth
+   * @throws Exception
+   */
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication().withUser("usuari").password("contrasenya").roles("USER");
-    auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+        
     auth.authenticationProvider(mongoAuthenticationProvider);
   }
 

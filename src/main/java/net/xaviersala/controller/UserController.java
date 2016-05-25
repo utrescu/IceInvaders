@@ -82,7 +82,7 @@ public class UserController {
    
   
   /**
-   * Desar les noves dades de l'usuari
+   * Desar les noves dades de l'usuari.
    * @param dades dades a desar
    * @param bindingResult resultat de la validació
    * @return Enviem al perfil
@@ -105,7 +105,7 @@ public class UserController {
   
   
   /**
-   * Mostrar una comanda
+   * Mostrar una comanda.
    * @param id id de la comanda
    * @param model model per Thymeleaf
    * @return Enviem a la pàgina amb la comanda o a error
@@ -124,8 +124,16 @@ public class UserController {
     return "comanda";
   }
   
-  
-  @InitBinder
+  /**
+   * Afegeix un validador per el camp d'usuari.
+   * 
+   * PROBLEMA: He hagut de definir que només s'apliqui a la
+   * variable 'dades' perquè sinó m'ho aplicava 
+   * també a la cistella i petava. 
+   * 
+   * @param binder
+   */
+  @InitBinder("dades")
   public void initBinder(WebDataBinder binder) {
       binder.addValidators(validador);
   }
@@ -172,26 +180,6 @@ public class UserController {
     return "redirect:/usuari";
   }
   
-  /**
-   * Temporal per afegir l'usuari xavier.
-   * 
-   *  A ELIMINAR
-   * 
-   * @return
-   */
-  @RequestMapping("/add_usuaris")
-  public String creaUsuaris() {
-    
-    UsuariDades dades = new UsuariDades();
-    dades.setUsername("xavier");
-    dades.setContrasenya("sala");
-    dades.setNom("Xavier");
-    dades.setCognoms("Sala");
-    dades.setEmail("xavier@local.com");
-    
-    usuaris.crearUsuari(dades);    
-    return "redirect:/";
-  }
 
 
 }

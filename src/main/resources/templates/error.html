@@ -93,14 +93,14 @@ body {
 			</div>
 			<div class="col-xs-12 col-sm-6">
 				<p style="padding: 20px;"></p>
-				<h1 th:text="${error} +'!'">Ooops!</h1>
+				<h1>Ooops!</h1>
+				<h2 th:text="${status} + ' ' + ${error} +'! : ' + ${message}"></h2>
 				<h3>Si veus aquesta pàgina és que alguna cosa no ha anat del
 					tot bé. Et prometo que ens ho mirarem ...</h3>
-				<p></p>
-				
+				<p></p>				
 				<p>quan faci menys fred</p>
 				<p></p>
-				<p th:text="${datetime}"></p>
+				<blockquote th:text="${exception}"></blockquote>
 			</div>
 		</div>
 	</div>
