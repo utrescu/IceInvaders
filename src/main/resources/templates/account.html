@@ -86,8 +86,16 @@ body {
 <div class="container">
 	<div class="row">
   		<div class="col-sm-10"><h1 th:text="${usuari}">Xavier</h1></div>
-    	<div class="col-sm-2"><a href="/usuari" class="pull-right">
-    	<img title="profile image" class="img-circle img-responsive" src="images/tux.png"></a></div>
+    	<div class="col-sm-2">
+    		<div class="row"><a href="/usuari" >
+    		<img id="profile" title="profile image" class="img-circle img-responsive" src="images/tux.png"
+    		     width="200px" height="200px"></a>
+    		</div><div class="row">
+    		<label class="btn btn-primary btn-file">
+    			Canvia Icona <input type="file" style="display: none;" id="icona">
+			</label>
+			</div>
+		</div>
     </div>
     <div class="row">
   		<div class="col-sm-3"><!--left col-->
@@ -96,8 +104,7 @@ body {
             <li class="list-group-item text-muted">Perfil</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Alta</strong></span><span>2.13.2014</span></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Darrera visita</strong></span> Yesterday</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Nom</strong></span><span th:text="${dades.nom} + ' ' + ${dades.cognoms}">Xavier Sala</span></li>
-            
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Nom</strong></span><span th:text="${dades.nom} + ' ' + ${dades.cognoms}">Xavier Sala</span></li>            
           </ul> 
                
         </div><!--/col-3-->
@@ -225,5 +232,6 @@ body {
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     </div>
+    <script src="/js/icon.js"></script>
 </body>
 </html>
