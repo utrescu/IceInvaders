@@ -74,22 +74,20 @@ body {
 					</form>
 				</div>
 				<!-- Login -->
+				<form sec:authorize="isAuthenticated()" class="navbar-form pull-right" action="/logout" th:action="@{/logout}" method="post">							   					    
+					<button class="btn btn-primary navbar-btn">Logout</button>
+				</form>				
 				<ul class="nav navbar-nav navbar-right">
-					<li th:classappend="${menu=='login'}?active"
-						sec:authorize="!isAuthenticated()">
-						<a href="/login.html" th:href="@{/login}">Login</a></li>
-					<li sec:authorize="isAuthenticated()">
-					    <p class="navbar-text" >
-					    <a href="/account.html" th:href="@{/usuari}" sec:authentication="name">username</a>
-					    </p>
-						<form class="navbar-form pull-right" action="/logout" th:action="@{/logout}" method="post">						    
-							<button class="btn btn-default navbar-btn">Logout</button>
-						</form>
-					</li>
 					<li th:classappend="${menu=='basket'}?active"><a
 						href="/basket.html" th:href="@{/basket}"><span
 							class="glyphicon glyphicon-shopping-cart"></span></a></li>
-				</ul>
+					<li th:classappend="${menu=='login'}?active"
+						sec:authorize="!isAuthenticated()">
+						<a href="/login.html" th:href="@{/login}">Login</a></li>
+					<li sec:authorize="isAuthenticated()">					    
+					    <a href="/account.html" th:href="@{/usuari}" sec:authentication="name">username</a>					    
+					</li>					
+				</ul>					
 			</div>
 			<!--.nav-collapse -->
 		</div>

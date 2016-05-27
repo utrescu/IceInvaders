@@ -2,6 +2,8 @@ package net.xaviersala.repositories;
 
 import javax.validation.constraints.Size;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UsuariDades {
   
   @Size(min=3, max=30, message="Ha de tenir 3 caràcters com a mínim")
@@ -18,6 +20,8 @@ public class UsuariDades {
   String telefon;
   String adreca;
   String poblacio;
+  
+  MultipartFile icona;  
   
   public UsuariDades() {
     // Default constructor to fill default form.    
@@ -147,6 +151,22 @@ public class UsuariDades {
   public void setPoblacio(String poblacio) {
     this.poblacio = (poblacio == null) ? "" : poblacio;
   }
-    
-  
+
+  /**
+   * Icona de l'usuari.
+   * @return
+   */
+  public MultipartFile getIcona() {
+      return icona;
+  }
+
+  /** 
+   * Defineix la icona de l'usuari.
+   * 
+   * @param file
+   */
+  public void setIcona(MultipartFile file) {
+      this.icona = file;
+  }
+
 }

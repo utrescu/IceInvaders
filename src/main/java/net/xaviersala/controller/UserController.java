@@ -1,12 +1,18 @@
 package net.xaviersala.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +23,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.xaviersala.model.Cistella;
@@ -89,9 +97,27 @@ public class UserController {
    */
   @RequestMapping(value="/usuari", method=RequestMethod.POST)
   public String desarUsuari(@ModelAttribute("dades") @Valid UsuariDades dades, 
-      BindingResult resultat) {
+      BindingResult resultat,      
+      @RequestParam(value="icona", required=false) MultipartFile icona) {
     
-    String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();        
+    String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+    
+    if (!icona.isEmpty()) {
+       // Valida i desa la imatge!
+       try {
+        if (!validaImatge(username, icona)) {
+           resultat.rejectValue("icona", "", "Imatge incorrecta");
+           log.info("Imatge incorrecta (" + dades.getUsername() + ")");
+           return "account";
+         }
+      } catch (IOException e) {
+        resultat.rejectValue("icona", "", "Problemes per emmagatzemar la imatge");
+        log.info("IO Error (" + dades.getUsername() + ")");
+        return "account";
+      }
+    }
+    
+            
     
     if (resultat.hasErrors()) {
       log.error("Errors en l'actualització del perfil");
@@ -104,6 +130,46 @@ public class UserController {
   }
   
   
+  /** 
+   * Comprova que la imatge és correcta. 
+   * 
+   * @param image imatge a desar
+   * @return Si la imatge s'ha pogut desar perquè és del tipus correcte
+   * @throws IOException 
+   */
+  private boolean validaImatge(String usuari, MultipartFile image) throws IOException {
+    try (InputStream input = image.getInputStream()) {
+      try {
+          // No n'estic segur de que es pugui llegir dos cops ..
+          BufferedImage buf = ImageIO.read(input);
+          log.info("Gravar imatge");
+          ImageIO.write(buf, "png", new File("usuaris/", usuari + ".png"));
+          return true;
+      } catch (Exception e) {
+          log.info("Error " + e.getMessage());
+      }
+    }
+    return false;
+  }
+  
+  
+  /**
+   * Mostrar imatge de l'usuari.
+   */
+  @RequestMapping("/usuari/imatge")
+  @ResponseBody
+  public FileSystemResource getImatge() {
+      String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+      
+      FileSystemResource resource;
+      resource = new FileSystemResource("usuaris/"  + username + ".png");
+      if (!resource.exists()) {
+        log.info(resource.getFilename() + " no existeix");
+        return new FileSystemResource("usuaris/x.png");
+      }
+      return resource;
+  }
+
   /**
    * Mostrar una comanda.
    * @param id id de la comanda
