@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: header">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Ice Invaders: Forbidden</title>
+<link rel="shortcut icon" href="">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<link href="/css/full.css" rel="stylesheet">
+<style>
+body {
+	padding-top: 50px;
+}
+
+.starter-template {
+	padding: 40px 15px;
+	text-align: center;
+}
+</style>
+
+<!--[if IE]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<div class="container">
+		<nav class="navbar navbar-inverse navbar-fixed-top navbar-custom"
+		role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/"><img
+					style="max-width: 40px; margin-top: -7px;" src="/images/icein.png"></a>
+			</div>
+		</div>
+		</nav>
+			
+		<div class="row">
+			<div class="col-xs-12 col-sm-4">
+				<p style="padding: 20px;"></p>
+				<img src="/images/403.png" class="img-responsive">
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<p style="padding: 20px;"></p>
+			    <div class="panel panel-danger">
+			        <div class="panel-heading">
+						<h1>Ep! Accés denegat</h1>
+					</div>
+					<div class="panel-body">
+					Si veus aquesta pàgina és que estas intentant accedir a algun lloc
+					on no tens permís ... <p></p>Si creus que hauries de tenir-hi accés posa't en
+					contacte amb l'administrador</div>
+				</div>				
+				<p>Però que sigui quan faci menys fred</p>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="fragments/header :: footer"></footer>
+
+	<div th:replace="fragments/header :: script" th:remove="tag"> 	
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    </div>
+</body>
+</html>
